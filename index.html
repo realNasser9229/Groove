@@ -1,40 +1,1866 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover"
-    />
-    <meta name="theme-color" content="#0a0a0f">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta
-      name="description"
-      content="Groove - The ultra-fast, private, and customizable browser for the modern web."
-    >
-    <title>Groove Browser</title>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#0a0a0f">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Groove</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+:root {
+  --bg: #0a0a0f;
+  --bg2: #12121a;
+  --bg3: #1a1a26;
+  --surface: rgba(255,255,255,0.04);
+  --surface2: rgba(255,255,255,0.07);
+  --surface3: rgba(255,255,255,0.10);
+  --border: rgba(255,255,255,0.08);
+  --border2: rgba(255,255,255,0.12);
+  --text: #f0f0f5;
+  --text2: rgba(240,240,245,0.7);
+  --text3: rgba(240,240,245,0.4);
+  --accent: #6c5ce7;
+  --accent2: #a29bfe;
+  --accent-glow: rgba(108,92,231,0.3);
+  --green: #00cec9;
+  --green-glow: rgba(0,206,201,0.25);
+  --red: #ff6b6b;
+  --red-glow: rgba(255,107,107,0.25);
+  --orange: #ffa502;
+  --orange-glow: rgba(255,165,2,0.25);
+  --glass: rgba(18,18,26,0.75);
+  --glass2: rgba(18,18,26,0.88);
+  --radius: 16px;
+  --radius-sm: 10px;
+  --radius-lg: 24px;
+  --shadow: 0 8px 32px rgba(0,0,0,0.4);
+  --shadow-lg: 0 16px 64px rgba(0,0,0,0.6);
+  --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --bounce: 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+html, body { 
+  height: 100%; width: 100%; overflow: hidden; 
+  font-family: 'Inter', -apple-system, sans-serif; 
+  background: var(--bg); color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  touch-action: manipulation;
+}
+input, button, textarea { font-family: inherit; outline: none; border: none; background: none; color: inherit; }
+button { cursor: pointer; touch-action: manipulation; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
-      rel="stylesheet"
-    >
+/* ===== SPLASH SCREEN ===== */
+#splash {
+  position: fixed; inset: 0; z-index: 10000;
+  background: var(--bg);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+#splash.hide { opacity: 0; transform: scale(1.05); pointer-events: none; }
+#splash .logo-wrap { position: relative; width: 100px; height: 100px; margin-bottom: 32px; }
+#splash .logo-ring {
+  position: absolute; inset: 0; border-radius: 50%;
+  border: 2.5px solid transparent;
+  border-top-color: var(--accent); border-right-color: var(--accent2);
+  animation: spin 1.2s linear infinite;
+}
+#splash .logo-ring:nth-child(2) {
+  inset: 8px; animation-duration: 1.8s; animation-direction: reverse;
+  border-top-color: var(--green); border-right-color: transparent;
+}
+#splash .logo-core {
+  position: absolute; inset: 20px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), var(--green));
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800; font-size: 24px; color: white;
+  box-shadow: 0 0 40px var(--accent-glow);
+}
+#splash .splash-text {
+  font-size: 28px; font-weight: 700; letter-spacing: -0.5px;
+  background: linear-gradient(135deg, var(--text), var(--accent2));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  opacity: 0; animation: fadeUp 0.6s 0.3s ease forwards;
+}
+#splash .splash-sub {
+  font-size: 13px; color: var(--text3); margin-top: 8px;
+  letter-spacing: 3px; text-transform: uppercase;
+  opacity: 0; animation: fadeUp 0.6s 0.5s ease forwards;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes fadeUp { to { opacity: 1; transform: translateY(0); } from { opacity: 0; transform: translateY(10px); } }
 
-    <style>
-      body {
-        margin: 0;
-        background-color: #0a0a0f;
-        font-family: 'Inter', system-ui, sans-serif;
-      }
-    </style>
-  </head>
+/* ===== MAIN APP ===== */
+#app {
+  height: 100%; width: 100%; display: flex; flex-direction: column;
+  opacity: 0; transition: opacity 0.4s ease;
+  padding-top: var(--safe-top);
+  padding-bottom: var(--safe-bottom);
+}
+#app.show { opacity: 1; }
 
-  <body>
-    <div id="root"></div>
+/* ===== TOP BAR ===== */
+.top-bar {
+  position: relative; z-index: 100;
+  padding: 8px 12px;
+  background: var(--glass2);
+  backdrop-filter: blur(40px) saturate(1.4);
+  -webkit-backdrop-filter: blur(40px) saturate(1.4);
+  border-bottom: 1px solid var(--border);
+}
+.url-bar {
+  display: flex; align-items: center; gap: 8px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 14px; padding: 0 4px 0 12px;
+  height: 46px; transition: var(--transition);
+  position: relative; overflow: hidden;
+}
+.url-bar:focus-within {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-glow), var(--shadow);
+  background: var(--surface3);
+}
+.url-security-icon {
+  flex-shrink: 0; width: 18px; height: 18px;
+  display: flex; align-items: center; justify-content: center;
+  transition: var(--transition);
+}
+.url-security-icon svg { width: 16px; height: 16px; }
+.url-security-icon.secure svg { color: var(--green); }
+.url-security-icon.insecure svg { color: var(--red); }
+.url-security-icon.neutral svg { color: var(--text3); }
+.url-input {
+  flex: 1; height: 100%; font-size: 14.5px; font-weight: 400;
+  color: var(--text); background: transparent; min-width: 0;
+}
+.url-input::placeholder { color: var(--text3); }
+.url-go-btn {
+  flex-shrink: 0; width: 36px; height: 36px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--accent), #8b7cf7);
+  display: flex; align-items: center; justify-content: center;
+  transition: var(--transition);
+  box-shadow: 0 2px 8px var(--accent-glow);
+}
+.url-go-btn:active { transform: scale(0.9); }
+.url-go-btn svg { width: 18px; height: 18px; color: white; }
 
-    <!-- IMPORTANT: relative path, JS not TSX -->
-    <script type="module" src="./src/main.js"></script>
-  </body>
+/* ===== LOADING BAR ===== */
+.loading-bar {
+  position: absolute; bottom: 0; left: 0; height: 2.5px; 
+  background: linear-gradient(90deg, var(--accent), var(--green), var(--accent2));
+  border-radius: 0 2px 2px 0;
+  width: 0%; transition: width 0.3s ease;
+  box-shadow: 0 0 12px var(--accent-glow);
+}
+.loading-bar.active { animation: loadProgress 2s ease-in-out forwards; }
+.loading-bar.done { width: 100% !important; opacity: 0; transition: width 0.2s, opacity 0.4s 0.2s; }
+@keyframes loadProgress {
+  0% { width: 0%; } 30% { width: 45%; } 60% { width: 70%; } 80% { width: 85%; } 100% { width: 92%; }
+}
+
+/* ===== CONTENT AREA ===== */
+.content-area {
+  flex: 1; position: relative; overflow: hidden;
+  background: var(--bg);
+}
+.content-iframe {
+  width: 100%; height: 100%; border: none;
+  background: var(--bg); position: absolute; inset: 0;
+}
+
+/* ===== HOME PAGE ===== */
+.home-page {
+  position: absolute; inset: 0; overflow-y: auto;
+  padding: 24px 16px 100px; background: var(--bg);
+}
+.home-page.hidden { display: none; }
+.home-greeting {
+  font-size: 26px; font-weight: 700; margin-bottom: 4px;
+  background: linear-gradient(135deg, var(--text), var(--accent2));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.home-date { font-size: 13px; color: var(--text3); margin-bottom: 28px; }
+.home-section-title {
+  font-size: 12px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 1.5px; color: var(--text3); margin-bottom: 12px;
+}
+.quick-links {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
+  margin-bottom: 28px;
+}
+.quick-link {
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  padding: 16px 8px; border-radius: var(--radius);
+  background: var(--surface); border: 1px solid var(--border);
+  transition: var(--transition);
+}
+.quick-link:active { transform: scale(0.94); background: var(--surface2); }
+.quick-link-icon {
+  width: 44px; height: 44px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; font-weight: 700;
+}
+.quick-link-name { font-size: 11px; color: var(--text2); font-weight: 500; text-align: center; }
+
+/* Privacy stats on home */
+.privacy-home-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 20px; margin-bottom: 28px;
+  position: relative; overflow: hidden;
+}
+.privacy-home-card::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(135deg, var(--accent-glow), transparent, var(--green-glow));
+  opacity: 0.3;
+}
+.privacy-home-card .card-inner { position: relative; z-index: 1; }
+.privacy-home-title {
+  font-size: 16px; font-weight: 700; margin-bottom: 4px;
+  display: flex; align-items: center; gap: 8px;
+}
+.privacy-home-sub { font-size: 12px; color: var(--text3); margin-bottom: 16px; }
+.privacy-stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.privacy-stat {
+  text-align: center; padding: 12px 4px;
+  background: rgba(0,0,0,0.25); border-radius: var(--radius-sm);
+}
+.privacy-stat-num {
+  font-size: 24px; font-weight: 800;
+  background: linear-gradient(135deg, var(--accent2), var(--green));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.privacy-stat-label { font-size: 10px; color: var(--text3); margin-top: 2px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+/* Bookmarks */
+.bookmarks-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 28px; }
+.bookmark-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 14px; border-radius: var(--radius);
+  background: var(--surface); border: 1px solid var(--border);
+  transition: var(--transition);
+}
+.bookmark-item:active { background: var(--surface2); transform: scale(0.98); }
+.bookmark-favicon {
+  width: 36px; height: 36px; border-radius: 10px;
+  background: var(--surface2); display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 14px; color: var(--accent2); flex-shrink: 0;
+}
+.bookmark-info { flex: 1; min-width: 0; }
+.bookmark-title { font-size: 14px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.bookmark-url { font-size: 11px; color: var(--text3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.bookmark-del {
+  flex-shrink: 0; width: 30px; height: 30px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text3); transition: var(--transition);
+}
+.bookmark-del:active { color: var(--red); background: var(--red-glow); }
+.no-bookmarks { text-align: center; padding: 20px; color: var(--text3); font-size: 13px; }
+
+/* ===== INTERNAL PAGES ===== */
+.internal-page {
+  position: absolute; inset: 0; overflow-y: auto;
+  padding: 20px 16px 100px; background: var(--bg);
+  display: none;
+}
+.internal-page.active { display: block; }
+.ip-header { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
+.ip-back {
+  width: 38px; height: 38px; border-radius: 10px;
+  background: var(--surface); border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text2); transition: var(--transition);
+}
+.ip-back:active { background: var(--surface2); }
+.ip-title { font-size: 22px; font-weight: 700; }
+.ip-section { margin-bottom: 24px; }
+.ip-section-title {
+  font-size: 11px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 1.5px; color: var(--text3); margin-bottom: 10px; padding-left: 4px;
+}
+.ip-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); overflow: hidden;
+}
+.ip-row {
+  display: flex; align-items: center; padding: 14px 16px;
+  border-bottom: 1px solid var(--border); gap: 12px;
+}
+.ip-row:last-child { border-bottom: none; }
+.ip-row-icon {
+  width: 36px; height: 36px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; font-size: 18px;
+}
+.ip-row-content { flex: 1; min-width: 0; }
+.ip-row-title { font-size: 14px; font-weight: 500; }
+.ip-row-desc { font-size: 11.5px; color: var(--text3); margin-top: 2px; }
+.ip-row-action { flex-shrink: 0; }
+
+/* Toggle switch */
+.toggle {
+  width: 48px; height: 28px; border-radius: 14px;
+  background: var(--surface3); position: relative;
+  transition: var(--transition); cursor: pointer;
+  border: 1px solid var(--border);
+}
+.toggle.on {
+  background: linear-gradient(135deg, var(--accent), #8b7cf7);
+  border-color: transparent;
+  box-shadow: 0 2px 12px var(--accent-glow);
+}
+.toggle::after {
+  content: ''; position: absolute;
+  width: 22px; height: 22px; border-radius: 11px;
+  background: white; top: 2px; left: 2px;
+  transition: var(--bounce);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+.toggle.on::after { left: 22px; }
+
+/* Action button */
+.ip-action-btn {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  width: 100%; padding: 14px;
+  border-radius: var(--radius);
+  font-size: 14px; font-weight: 600;
+  transition: var(--transition);
+  border: 1px solid var(--border);
+}
+.ip-action-btn.danger {
+  background: rgba(255,107,107,0.1);
+  border-color: rgba(255,107,107,0.2);
+  color: var(--red);
+}
+.ip-action-btn.danger:active { background: rgba(255,107,107,0.2); }
+
+/* ===== ERROR PAGE ===== */
+.error-page {
+  position: absolute; inset: 0;
+  display: none; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 32px; text-align: center; background: var(--bg);
+}
+.error-page.active { display: flex; }
+.error-icon {
+  width: 80px; height: 80px; border-radius: 50%;
+  background: var(--surface);
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 20px; font-size: 36px;
+}
+.error-title { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+.error-desc { font-size: 13px; color: var(--text3); margin-bottom: 24px; line-height: 1.5; max-width: 300px; }
+.error-retry {
+  padding: 12px 32px; border-radius: 12px;
+  background: linear-gradient(135deg, var(--accent), #8b7cf7);
+  color: white; font-weight: 600; font-size: 14px;
+  box-shadow: 0 4px 16px var(--accent-glow);
+  transition: var(--transition);
+}
+.error-retry:active { transform: scale(0.95); }
+
+/* ===== BOTTOM NAV ===== */
+.bottom-nav {
+  position: relative; z-index: 100;
+  background: var(--glass2);
+  backdrop-filter: blur(40px) saturate(1.4);
+  -webkit-backdrop-filter: blur(40px) saturate(1.4);
+  border-top: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-around;
+  padding: 6px 8px 8px; height: 56px;
+}
+.nav-btn {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 2px; padding: 6px 12px; border-radius: 12px;
+  color: var(--text3); transition: var(--transition);
+  position: relative;
+}
+.nav-btn:active { transform: scale(0.85); }
+.nav-btn.active { color: var(--accent2); }
+.nav-btn svg { width: 22px; height: 22px; }
+.nav-btn-label { font-size: 9px; font-weight: 500; }
+.nav-btn .badge {
+  position: absolute; top: 2px; right: 2px;
+  min-width: 16px; height: 16px; border-radius: 8px;
+  background: var(--accent); color: white;
+  font-size: 9px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  padding: 0 4px;
+  box-shadow: 0 2px 8px var(--accent-glow);
+}
+
+/* ===== TAB SWITCHER OVERLAY ===== */
+.tabs-overlay {
+  position: fixed; inset: 0; z-index: 600;
+  background: var(--bg);
+  display: flex; flex-direction: column;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.35s ease;
+}
+.tabs-overlay.show { opacity: 1; pointer-events: auto; }
+
+.tabs-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 16px 10px;
+  border-bottom: 1px solid var(--border);
+  background: var(--glass2);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+}
+.tabs-header-title {
+  font-size: 18px; font-weight: 700;
+  display: flex; align-items: center; gap: 8px;
+}
+.tabs-count {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 24px; height: 24px; border-radius: 12px;
+  background: var(--surface2); border: 1px solid var(--border);
+  font-size: 12px; font-weight: 700; color: var(--accent2);
+  padding: 0 6px;
+}
+.tabs-header-actions { display: flex; gap: 8px; }
+.tabs-header-btn {
+  width: 38px; height: 38px; border-radius: 10px;
+  background: var(--surface); border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text2); transition: var(--transition);
+}
+.tabs-header-btn:active { transform: scale(0.9); background: var(--surface2); }
+.tabs-header-btn.new-tab-btn {
+  background: linear-gradient(135deg, var(--accent), #8b7cf7);
+  border-color: transparent; color: white;
+  box-shadow: 0 2px 12px var(--accent-glow);
+}
+
+.tabs-grid {
+  flex: 1; overflow-y: auto; padding: 16px;
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;
+  align-content: start;
+}
+.tabs-grid::-webkit-scrollbar { width: 3px; }
+.tabs-grid::-webkit-scrollbar-track { background: transparent; }
+.tabs-grid::-webkit-scrollbar-thumb { background: var(--surface3); border-radius: 3px; }
+
+.tab-card {
+  position: relative; border-radius: var(--radius);
+  background: var(--surface);
+  border: 2px solid var(--border);
+  overflow: hidden; transition: var(--transition);
+  cursor: pointer;
+  animation: tabCardIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+.tab-card:active { transform: scale(0.96); }
+.tab-card.active-tab { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent), 0 4px 20px var(--accent-glow); }
+
+.tab-card-preview {
+  width: 100%; height: 120px; background: var(--bg);
+  display: flex; align-items: center; justify-content: center;
+  position: relative; overflow: hidden;
+}
+.tab-card-preview-content {
+  font-size: 11px; color: var(--text3); padding: 12px;
+  text-align: center; word-break: break-all;
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+}
+.tab-preview-icon {
+  width: 40px; height: 40px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; font-weight: 800;
+}
+.tab-card-info {
+  padding: 10px 12px; border-top: 1px solid var(--border);
+  display: flex; align-items: center; gap: 8px;
+}
+.tab-card-favicon {
+  width: 20px; height: 20px; border-radius: 5px;
+  background: var(--surface2); display: flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 700; color: var(--accent2); flex-shrink: 0;
+}
+.tab-card-title {
+  flex: 1; font-size: 12px; font-weight: 500;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.tab-card-close {
+  position: absolute; top: 6px; right: 6px;
+  width: 26px; height: 26px; border-radius: 13px;
+  background: rgba(0,0,0,0.65);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.1);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text2); transition: var(--transition); z-index: 2;
+}
+.tab-card-close:hover, .tab-card-close:active { background: var(--red); color: white; border-color: transparent; }
+.tab-card-close svg { width: 14px; height: 14px; }
+
+@keyframes tabCardIn {
+  from { opacity: 0; transform: scale(0.85) translateY(12px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.tabs-empty {
+  grid-column: 1 / -1;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 60px 20px; text-align: center;
+}
+.tabs-empty-icon { font-size: 48px; margin-bottom: 16px; opacity: 0.3; }
+.tabs-empty-text { font-size: 16px; font-weight: 600; color: var(--text2); margin-bottom: 6px; }
+.tabs-empty-sub { font-size: 13px; color: var(--text3); margin-bottom: 20px; }
+.tabs-empty-btn {
+  padding: 12px 28px; border-radius: 12px;
+  background: linear-gradient(135deg, var(--accent), #8b7cf7);
+  color: white; font-weight: 600; font-size: 14px;
+  box-shadow: 0 4px 16px var(--accent-glow);
+  transition: var(--transition);
+}
+.tabs-empty-btn:active { transform: scale(0.95); }
+
+/* ===== OVERLAYS ===== */
+.overlay {
+  position: fixed; inset: 0; z-index: 500;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  display: flex; align-items: flex-end; justify-content: center;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+.overlay.show { opacity: 1; pointer-events: auto; }
+.overlay-panel {
+  width: 100%; max-width: 500px; max-height: 85vh;
+  background: var(--bg2);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  border: 1px solid var(--border); border-bottom: none;
+  overflow-y: auto;
+  transform: translateY(100%);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.overlay.show .overlay-panel { transform: translateY(0); }
+.overlay-handle {
+  display: flex; justify-content: center; padding: 12px;
+  position: sticky; top: 0; background: var(--bg2); z-index: 1;
+}
+.overlay-handle::after {
+  content: ''; width: 36px; height: 4px; border-radius: 2px;
+  background: var(--surface3);
+}
+
+/* ===== TOAST ===== */
+.toast {
+  position: fixed; top: 60px; left: 50%; transform: translateX(-50%) translateY(-100px);
+  z-index: 9999;
+  padding: 12px 20px; border-radius: 14px;
+  background: var(--glass2);
+  backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-lg);
+  font-size: 13px; font-weight: 500;
+  display: flex; align-items: center; gap: 8px;
+  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  max-width: 90%; white-space: nowrap;
+}
+.toast.show { transform: translateX(-50%) translateY(0); }
+.toast-icon { font-size: 16px; }
+
+/* ===== INSPECT BARS ===== */
+.inspect-bar {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 16px; background: var(--surface);
+  border-radius: var(--radius); margin-bottom: 8px;
+  border: 1px solid var(--border);
+}
+.inspect-bar-icon {
+  width: 40px; height: 40px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; font-size: 18px;
+}
+.inspect-bar-info { flex: 1; }
+.inspect-bar-title { font-size: 13px; font-weight: 600; }
+.inspect-bar-val { font-size: 11px; color: var(--text3); margin-top: 1px; }
+.inspect-bar-status {
+  flex-shrink: 0; padding: 4px 10px;
+  border-radius: 8px; font-size: 11px; font-weight: 600;
+}
+.status-safe { background: var(--green-glow); color: var(--green); }
+.status-warn { background: var(--orange-glow); color: var(--orange); }
+.status-block { background: var(--red-glow); color: var(--red); }
+
+/* ===== MISC ===== */
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px var(--accent-glow); }
+  50% { box-shadow: 0 0 40px var(--accent-glow), 0 0 60px rgba(108,92,231,0.15); }
+}
+.glow-pulse { animation: pulse-glow 3s ease-in-out infinite; }
+
+.overlay-panel::-webkit-scrollbar { width: 3px; }
+.overlay-panel::-webkit-scrollbar-track { background: transparent; }
+.overlay-panel::-webkit-scrollbar-thumb { background: var(--surface3); border-radius: 3px; }
+.home-page::-webkit-scrollbar { width: 3px; }
+.home-page::-webkit-scrollbar-track { background: transparent; }
+.home-page::-webkit-scrollbar-thumb { background: var(--surface3); border-radius: 3px; }
+.internal-page::-webkit-scrollbar { width: 3px; }
+.internal-page::-webkit-scrollbar-track { background: transparent; }
+.internal-page::-webkit-scrollbar-thumb { background: var(--surface3); border-radius: 3px; }
+
+/* Ephemeral mode */
+.ephemeral-active .top-bar { border-bottom-color: rgba(108,92,231,0.4); }
+.ephemeral-indicator {
+  display: none; align-items: center; gap: 6px;
+  padding: 4px 10px; margin-top: 6px;
+  background: rgba(108,92,231,0.12);
+  border-radius: 8px; font-size: 11px; font-weight: 500; color: var(--accent2);
+  width: fit-content;
+}
+.ephemeral-active .ephemeral-indicator { display: inline-flex; }
+
+/* Iframe container for tabs */
+.iframe-container { position: absolute; inset: 0; }
+.iframe-container iframe {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  border: none; background: var(--bg);
+}
+.iframe-container iframe.hidden-iframe { display: none; }
+</style>
+</head>
+<body>
+<!-- SPLASH SCREEN -->
+<div id="splash">
+  <div class="logo-wrap">
+    <div class="logo-ring"></div>
+    <div class="logo-ring"></div>
+    <div class="logo-core">G</div>
+  </div>
+  <div class="splash-text">Groove</div>
+  <div class="splash-sub">Loading...</div>
+</div>
+
+<!-- TOAST -->
+<div id="toast" class="toast">
+  <span class="toast-icon"></span>
+  <span class="toast-msg"></span>
+</div>
+
+<!-- APP -->
+<div id="app">
+  <!-- TOP BAR -->
+  <div class="top-bar">
+    <div class="url-bar" id="urlBar">
+      <div class="url-security-icon neutral" id="securityIcon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/>
+        </svg>
+      </div>
+      <input type="text" class="url-input" id="urlInput" placeholder="Search or enter URL..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="go">
+      <button class="url-go-btn" id="goBtn" aria-label="Go">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+        </svg>
+      </button>
+      <div class="loading-bar" id="loadingBar"></div>
+    </div>
+    <div class="ephemeral-indicator" id="ephemeralBadge">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+      Ephemeral Mode
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content-area" id="contentArea">
+    <!-- Home Page -->
+    <div class="home-page no-scrollbar" id="homePage">
+      <div class="home-greeting" id="homeGreeting">Good evening</div>
+      <div class="home-date" id="homeDate"></div>
+
+      <div class="privacy-home-card glow-pulse">
+        <div class="card-inner">
+          <div class="privacy-home-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            Protection Active
+          </div>
+          <div class="privacy-home-sub">Your browsing is secured by Groove.</div>
+          <div class="privacy-stats-row">
+            <div class="privacy-stat">
+              <div class="privacy-stat-num" id="homeAdsBlocked">0</div>
+              <div class="privacy-stat-label">Blocked Ads</div>
+            </div>
+            <div class="privacy-stat">
+              <div class="privacy-stat-num" id="homeTrackersBlocked">0</div>
+              <div class="privacy-stat-label">Blocked Trackers</div>
+            </div>
+            <div class="privacy-stat">
+              <div class="privacy-stat-num" id="homeScriptsBlocked">0</div>
+              <div class="privacy-stat-label">Blocked Scripts</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="home-section-title">Quick Links</div>
+      <div class="quick-links" id="quickLinks">
+        <button class="quick-link" onclick="navigateTo('https://www.bing.com')">
+          <div class="quick-link-icon" style="background:rgba(0,120,212,0.15);color:#0078d4;">B</div>
+          <div class="quick-link-name">Bing</div>
+        </button>
+        <button class="quick-link" onclick="navigateTo('https://wikipedia.org')">
+          <div class="quick-link-icon" style="background:rgba(255,255,255,0.08);color:#ccc;">W</div>
+          <div class="quick-link-name">Wikipedia</div>
+        </button>
+        <button class="quick-link" onclick="navigateTo('https://github.com')">
+          <div class="quick-link-icon" style="background:rgba(255,255,255,0.08);color:#f0f0f5;">G</div>
+          <div class="quick-link-name">GitHub</div>
+        </button>
+        <button class="quick-link" onclick="openInternal('privacy')">
+          <div class="quick-link-icon" style="background:rgba(0,206,201,0.15);color:var(--green);">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div class="quick-link-name">Privacy</div>
+        </button>
+      </div>
+
+      <div class="home-section-title">Bookmarks</div>
+      <div class="bookmarks-list" id="bookmarksList">
+        <div class="no-bookmarks">No bookmarks yet. Tap "★" to save pages.</div>
+      </div>
+    </div>
+
+    <!-- Internal: Settings -->
+    <div class="internal-page no-scrollbar" id="pageSettings">
+      <div class="ip-header">
+        <button class="ip-back" onclick="goHome()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <div class="ip-title">Settings</div>
+      </div>
+      <div class="ip-section">
+        <div class="ip-section-title">Search Engine</div>
+        <div class="ip-card">
+          <div class="ip-row">
+            <div class="ip-row-icon" style="background:rgba(0,120,212,0.15);">
+              <span style="font-weight:800;color:#0078d4;font-size:16px;">B</span>
+            </div>
+            <div class="ip-row-content">
+              <div class="ip-row-title">Bing</div>
+              <div class="ip-row-desc">Default search engine — powered by Microsoft.</div>
+            </div>
+            <div class="ip-row-action">
+              <div style="width:12px;height:12px;border-radius:6px;background:var(--green);box-shadow:0 0 8px var(--green-glow);"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="ip-section">
+        <div class="ip-section-title">Browsing</div>
+        <div class="ip-card">
+          <div class="ip-row">
+            <div class="ip-row-icon" style="background:rgba(108,92,231,0.15);">🔒</div>
+            <div class="ip-row-content">
+              <div class="ip-row-title">Ephemeral Mode</div>
+              <div class="ip-row-desc">No history, cookies, or data persist</div>
+            </div>
+            <div class="ip-row-action">
+              <div class="toggle" id="toggleEphemeral" data-key="ephemeral" onclick="toggleSetting(this)"></div>
+            </div>
+          </div>
+          <div class="ip-row">
+            <div class="ip-row-icon" style="background:rgba(0,206,201,0.15);">🔗</div>
+            <div class="ip-row-content">
+              <div class="ip-row-title">HTTPS Enforcement</div>
+              <div class="ip-row-desc">Upgrade all requests to HTTPS</div>
+            </div>
+            <div class="ip-row-action">
+              <div class="toggle on" id="toggleHttps" data-key="httpsEnforce" onclick="toggleSetting(this)"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="ip-section">
+        <div class="ip-section-title">Data</div>
+        <div class="ip-card">
+          <div class="ip-row" style="cursor:pointer;" onclick="clearAllData()">
+            <div class="ip-row-icon" style="background:rgba(255,107,107,0.15);">🗑️</div>
+            <div class="ip-row-content">
+              <div class="ip-row-title" style="color:var(--red);">Clear All Browsing Data</div>
+              <div class="ip-row-desc">Remove bookmarks, settings, and counters</div>
+            </div>
+            <div class="ip-row-action" style="color:var(--text3);">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="text-align:center;padding:24px 0;">
+        <div style="font-size:13px;font-weight:700;color:var(--text3);">Groove Browser</div>
+        <div style="font-size:11px;color:var(--text3);margin-top:4px;">Version 2.5.2 · Privacy First</div>
+      </div>
+    </div>
+
+    <!-- Internal: Privacy -->
+    <div class="internal-page no-scrollbar" id="pagePrivacy">
+      <div class="ip-header">
+        <button class="ip-back" onclick="goHome()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <div class="ip-title">Privacy & Security</div>
+      </div>
+      <div class="privacy-home-card glow-pulse" style="margin-bottom:24px;">
+        <div class="card-inner">
+          <div class="privacy-home-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            Groove Shield
+          </div>
+          <div class="privacy-home-sub">Real-time protection status</div>
+          <div class="privacy-stats-row">
+            <div class="privacy-stat">
+              <div class="privacy-stat-num" id="privAds">0</div>
+              <div class="privacy-stat-label">Blocked Ads</div>
+            </div>
+            <div class="privacy-stat">
+              <div class="privacy-stat-num" id="privTrackers">0</div>
+              <div class="privacy-stat-label">Blocked Trackers</div>
+            </div>
+            <div class="privacy-stat">
+              <div class="privacy-stat-num" id="privScripts">0</div>
+              <div class="privacy-stat-label">Blocked Scripts</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="ip-section">
+        <div class="ip-section-title">Protection Controls</div>
+        <div class="ip-card">
+          <div class="ip-row">
+            <div class="ip-row-icon" style="background:rgba(255,107,107,0.15);">🛡️</div>
+            <div class="ip-row-content">
+              <div class="ip-row-title">Ad Blocking</div>
+              <div class="ip-row-desc">Block ads, banners, and pop-ups</div>
+            </div>
+            <div class="ip-row-action">
+              <div class="toggle on" data-key="adBlock" onclick="toggleSetting(this)"></div>
+            </div>
+          </div>
+          <div class="ip-row">
+            <div class="ip-row-icon" style="background:rgba(255,165,2,0.15);">🔍</div>
+            <div class="ip-row-content">
+              <div class="ip-row-title">Anti-Tracker</div>
+              <div class="ip-row-desc">Prevent cross-site tracking</div>
+            </div>
+            <div class="ip-row-action">
+              <div class="toggle on" data-key="antiTracker" onclick="toggleSetting(this)"></div>
+            </div>
+          </div>
+          <div class="ip-row">
+            <div class="ip-row-icon" style="background:rgba(162,155,254,0.15);">⚡</div>
+            <div class="ip-row-content">
+              <div class="ip-row-title">JavaScript</div>
+              <div class="ip-row-desc">Enable or disable page scripts</div>
+            </div>
+            <div class="ip-row-action">
+              <div class="toggle on" data-key="jsEnabled" onclick="toggleSetting(this)"></div>
+            </div>
+          </div>
+          <div class="ip-row">
+            <div class="ip-row-icon" style="background:rgba(0,206,201,0.15);">🚫</div>
+            <div class="ip-row-content">
+              <div class="ip-row-title">Third-Party Content</div>
+              <div class="ip-row-desc">Block external iframes and widgets</div>
+            </div>
+            <div class="ip-row-action">
+              <div class="toggle on" data-key="thirdPartyBlock" onclick="toggleSetting(this)"></div>
+            </div>
+          </div>
+          <div class="ip-row">
+            <div class="ip-row-icon" style="background:rgba(108,92,231,0.15);">🎬</div>
+            <div class="ip-row-content">
+              <div class="ip-row-title">Block Autoplay Media</div>
+              <div class="ip-row-desc">Prevent videos from auto-playing</div>
+            </div>
+            <div class="ip-row-action">
+              <div class="toggle on" data-key="blockAutoplay" onclick="toggleSetting(this)"></div>
+            </div>
+          </div>
+          <div class="ip-row">
+            <div class="ip-row-icon" style="background:rgba(255,107,107,0.15);">🪟</div>
+            <div class="ip-row-content">
+              <div class="ip-row-title">Block Popups</div>
+              <div class="ip-row-desc">Prevent pop-up windows and redirects</div>
+            </div>
+            <div class="ip-row-action">
+              <div class="toggle on" data-key="blockPopups" onclick="toggleSetting(this)"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="ip-section">
+        <button class="ip-action-btn danger" onclick="clearBrowsingData()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+          Clear Browsing Data
+        </button>
+      </div>
+    </div>
+
+    <!-- Internal: Inspect -->
+    <div class="internal-page no-scrollbar" id="pageInspect">
+      <div class="ip-header">
+        <button class="ip-back" onclick="goHome()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <div class="ip-title">Page Inspector</div>
+      </div>
+      <div id="inspectContent">
+        <div class="inspect-bar">
+          <div class="inspect-bar-icon" style="background:var(--green-glow);">🔒</div>
+          <div class="inspect-bar-info">
+            <div class="inspect-bar-title">Connection</div>
+            <div class="inspect-bar-val" id="inspectConn">No page loaded</div>
+          </div>
+          <div class="inspect-bar-status status-safe" id="inspectConnStatus">Safe</div>
+        </div>
+        <div class="inspect-bar">
+          <div class="inspect-bar-icon" style="background:rgba(108,92,231,0.15);">🌐</div>
+          <div class="inspect-bar-info">
+            <div class="inspect-bar-title">Domain</div>
+            <div class="inspect-bar-val" id="inspectDomain">—</div>
+          </div>
+        </div>
+        <div class="inspect-bar">
+          <div class="inspect-bar-icon" style="background:rgba(255,107,107,0.15);">🛡️</div>
+          <div class="inspect-bar-info">
+            <div class="inspect-bar-title">Ads Blocked</div>
+            <div class="inspect-bar-val" id="inspectAds">0 on this page</div>
+          </div>
+          <div class="inspect-bar-status status-safe">Clean</div>
+        </div>
+        <div class="inspect-bar">
+          <div class="inspect-bar-icon" style="background:rgba(255,165,2,0.15);">🔍</div>
+          <div class="inspect-bar-info">
+            <div class="inspect-bar-title">Trackers Blocked</div>
+            <div class="inspect-bar-val" id="inspectTrackers">0 detected</div>
+          </div>
+          <div class="inspect-bar-status status-safe">Clean</div>
+        </div>
+        <div class="inspect-bar">
+          <div class="inspect-bar-icon" style="background:rgba(162,155,254,0.15);">⚡</div>
+          <div class="inspect-bar-info">
+            <div class="inspect-bar-title">Scripts</div>
+            <div class="inspect-bar-val" id="inspectScripts">JavaScript enabled</div>
+          </div>
+          <div class="inspect-bar-status status-safe" id="inspectJsStatus">On</div>
+        </div>
+        <div class="inspect-bar">
+          <div class="inspect-bar-icon" style="background:rgba(0,206,201,0.15);">📜</div>
+          <div class="inspect-bar-info">
+            <div class="inspect-bar-title">Content Policy</div>
+            <div class="inspect-bar-val" id="inspectPolicy">Third-party blocked</div>
+          </div>
+          <div class="inspect-bar-status status-block" id="inspectPolicyStatus">Strict</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Error Page -->
+    <div class="error-page" id="errorPage">
+      <div class="error-icon">⚠️</div>
+      <div class="error-title" id="errorTitle">Can't reach this page</div>
+      <div class="error-desc" id="errorDesc">The page might be temporarily down or the URL may be incorrect.</div>
+      <button class="error-retry" onclick="retryNavigation()">Try Again</button>
+    </div>
+
+    <!-- iframe container for all tabs -->
+    <div class="iframe-container" id="iframeContainer"></div>
+  </div>
+
+  <!-- BOTTOM NAV -->
+  <div class="bottom-nav">
+    <button class="nav-btn" id="navBack" onclick="goBack()" aria-label="Back">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      <span class="nav-btn-label">Back</span>
+    </button>
+    <button class="nav-btn" id="navForward" onclick="goForward()" aria-label="Forward">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+      <span class="nav-btn-label">Forward</span>
+    </button>
+    <button class="nav-btn active" id="navHome" onclick="goHome()" aria-label="Home">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      <span class="nav-btn-label">Home</span>
+    </button>
+    <button class="nav-btn" id="navTabs" onclick="openTabSwitcher()" aria-label="Tabs">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/></svg>
+      <span class="nav-btn-label">Tabs</span>
+      <span class="badge" id="tabsBadge">1</span>
+    </button>
+    <button class="nav-btn" id="navMenu" onclick="toggleMenu()" aria-label="Menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"/><circle cx="12" cy="5" r="1"/><circle cx="12" cy="19" r="1"/></svg>
+      <span class="nav-btn-label">More</span>
+    </button>
+  </div>
+</div>
+
+<!-- TAB SWITCHER -->
+<div class="tabs-overlay" id="tabsOverlay">
+  <div class="tabs-header">
+    <div class="tabs-header-title">
+      Tabs <span class="tabs-count" id="tabsCount">1</span>
+    </div>
+    <div class="tabs-header-actions">
+      <button class="tabs-header-btn" onclick="closeTabSwitcher()" aria-label="Close">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <button class="tabs-header-btn new-tab-btn" onclick="createNewTab();closeTabSwitcher();" aria-label="New Tab">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      </button>
+    </div>
+  </div>
+  <div class="tabs-grid no-scrollbar" id="tabsGrid"></div>
+</div>
+
+<!-- MENU OVERLAY -->
+<div class="overlay" id="menuOverlay" onclick="closeMenu(event)">
+  <div class="overlay-panel" onclick="event.stopPropagation()">
+    <div class="overlay-handle"></div>
+    <div style="padding: 0 16px 24px;">
+      <div class="ip-section" style="margin-bottom:16px;">
+        <div class="ip-card">
+          <div class="ip-row" style="cursor:pointer;" onclick="toggleBookmark()">
+            <div class="ip-row-icon" style="background:rgba(255,165,2,0.15);">⭐</div>
+            <div class="ip-row-content">
+              <div class="ip-row-title" id="bookmarkBtnText">Add Bookmark</div>
+              <div class="ip-row-desc">Save this page for later</div>
+            </div>
+          </div>
+          <div class="ip-row" style="cursor:pointer;" onclick="reloadPage()">
+            <div class="ip-row-icon" style="background:rgba(0,206,201,0.15);">🔄</div>
+            <div class="ip-row-content">
+              <div class="ip-row-title">Reload</div>
+              <div class="ip-row-desc">Refresh the current page</div>
+            </div>
+          </div>
+          <div class="ip-row" style="cursor:pointer;" onclick="openInternal('inspect');closeMenuDirect();">
+            <div class="ip-row-icon" style="background:rgba(162,155,254,0.15);">🔎</div>
+            <div class="ip-row-content">
+              <div class="ip-row-title">Inspect Page</div>
+              <div class="ip-row-desc">View security and blocking details</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="ip-section" style="margin-bottom:16px;">
+        <div class="ip-card">
+          <div class="ip-row" style="cursor:pointer;" onclick="createNewTab();closeMenuDirect();">
+            <div class="ip-row-icon" style="background:rgba(108,92,231,0.15);">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent2)" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </div>
+            <div class="ip-row-content">
+              <div class="ip-row-title">New Tab</div>
+              <div class="ip-row-desc">Open a fresh tab</div>
+            </div>
+          </div>
+          <div class="ip-row" style="cursor:pointer;" onclick="openInternal('settings');closeMenuDirect();">
+            <div class="ip-row-icon" style="background:rgba(108,92,231,0.15);">⚙️</div>
+            <div class="ip-row-content">
+              <div class="ip-row-title">Settings</div>
+              <div class="ip-row-desc">Preferences and data</div>
+            </div>
+          </div>
+          <div class="ip-row" style="cursor:pointer;" onclick="openInternal('privacy');closeMenuDirect();">
+            <div class="ip-row-icon" style="background:rgba(0,206,201,0.15);">🛡️</div>
+            <div class="ip-row-content">
+              <div class="ip-row-title">Privacy Dashboard</div>
+              <div class="ip-row-desc">Manage protection controls</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ===== STATE =====
+const DEFAULT_SETTINGS = {
+  searchEngine: 'bing',
+  adBlock: true, antiTracker: true, jsEnabled: true,
+  thirdPartyBlock: true, blockAutoplay: true, blockPopups: true,
+  httpsEnforce: true, ephemeral: false
+};
+
+const SEARCH_URL = 'https://www.bing.com/search?q=';
+
+const AD_DOMAINS = ['doubleclick.net','googlesyndication.com','adservice.google.com','ads.yahoo.com','adsrvr.org','adnxs.com','facebook.com/tr','amazon-adsystem.com','outbrain.com','taboola.com','criteo.com','pubmatic.com','rubiconproject.com','openx.net','casalemedia.com'];
+const TRACKER_DOMAINS = ['google-analytics.com','analytics.google.com','hotjar.com','mouseflow.com','fullstory.com','mixpanel.com','segment.io','amplitude.com','optimizely.com','crazyegg.com','clarity.ms','newrelic.com','sentry.io','bugsnag.com','datadoghq.com'];
+
+let settings = {};
+let counters = { ads: 0, trackers: 0, scripts: 0 };
+let bookmarks = [];
+
+// ===== TAB SYSTEM =====
+let tabs = [];
+let activeTabId = null;
+let tabIdCounter = 0;
+
+function generateTabId() {
+  return 'tab_' + (++tabIdCounter) + '_' + Date.now();
+}
+
+function createTabObject() {
+  return {
+    id: generateTabId(),
+    url: '',
+    title: 'New Tab',
+    view: 'home', // home | web | settings | privacy | inspect | error
+    history: [],
+    historyIndex: -1,
+    lastNavigatedUrl: ''
+  };
+}
+
+function getActiveTab() {
+  return tabs.find(t => t.id === activeTabId) || null;
+}
+
+function createNewTab() {
+  const tab = createTabObject();
+  tabs.push(tab);
+  switchToTab(tab.id);
+  updateTabBadge();
+  showToast('📑', 'New tab opened');
+}
+
+function closeTab(tabId, evt) {
+  if (evt) { evt.stopPropagation(); evt.preventDefault(); }
+  
+  const idx = tabs.findIndex(t => t.id === tabId);
+  if (idx === -1) return;
+
+  // Remove iframe
+  const iframe = document.getElementById('iframe_' + tabId);
+  if (iframe) iframe.remove();
+
+  tabs.splice(idx, 1);
+
+  if (tabs.length === 0) {
+    // Create a fresh tab if all closed
+    const tab = createTabObject();
+    tabs.push(tab);
+    switchToTab(tab.id);
+  } else if (activeTabId === tabId) {
+    // Switch to nearest tab
+    const newIdx = Math.min(idx, tabs.length - 1);
+    switchToTab(tabs[newIdx].id);
+  }
+
+  updateTabBadge();
+  renderTabsGrid();
+}
+
+function switchToTab(tabId) {
+  const tab = tabs.find(t => t.id === tabId);
+  if (!tab) return;
+
+  activeTabId = tabId;
+
+  // Hide all iframes
+  document.querySelectorAll('#iframeContainer iframe').forEach(f => {
+    f.classList.add('hidden-iframe');
+  });
+
+  // Restore tab state
+  if (tab.view === 'web' && tab.url) {
+    showView('web');
+    document.getElementById('urlInput').value = prettifyUrl(tab.url);
+    updateSecurityIcon(tab.url);
+    
+    let iframe = document.getElementById('iframe_' + tabId);
+    if (!iframe) {
+      iframe = createIframeForTab(tabId, tab.url);
+    }
+    iframe.classList.remove('hidden-iframe');
+  } else if (['settings','privacy','inspect'].includes(tab.view)) {
+    openInternal(tab.view);
+  } else {
+    showView('home');
+    document.getElementById('urlInput').value = '';
+    updateSecurityIcon('');
+  }
+
+  updateBookmarkBtn();
+  updateTabBadge();
+}
+
+function createIframeForTab(tabId, url) {
+  const container = document.getElementById('iframeContainer');
+  let iframe = document.getElementById('iframe_' + tabId);
+  if (iframe) iframe.remove();
+  
+  iframe = document.createElement('iframe');
+  iframe.id = 'iframe_' + tabId;
+  iframe.className = 'content-iframe';
+  
+  let sandbox = 'allow-same-origin allow-forms';
+  if (settings.jsEnabled) sandbox += ' allow-scripts';
+  if (!settings.blockPopups) sandbox += ' allow-popups';
+  iframe.setAttribute('sandbox', sandbox);
+  iframe.setAttribute('allowfullscreen', '');
+  
+  iframe.src = url;
+  iframe.onload = () => { finishLoading(); };
+  iframe.onerror = () => {
+    const at = getActiveTab();
+    if (at && at.id === tabId) showError();
+  };
+  
+  container.appendChild(iframe);
+  return iframe;
+}
+
+// ===== PERSISTENCE =====
+function loadState() {
+  try {
+    const s = localStorage.getItem('groove_settings');
+    settings = s ? { ...DEFAULT_SETTINGS, ...JSON.parse(s) } : { ...DEFAULT_SETTINGS };
+    settings.searchEngine = 'bing'; // force Bing
+    const c = localStorage.getItem('groove_counters');
+    counters = c ? JSON.parse(c) : { ads: 0, trackers: 0, scripts: 0 };
+    const b = localStorage.getItem('groove_bookmarks');
+    bookmarks = b ? JSON.parse(b) : [];
+  } catch(e) {
+    settings = { ...DEFAULT_SETTINGS };
+    counters = { ads: 0, trackers: 0, scripts: 0 };
+    bookmarks = [];
+  }
+}
+function saveSettings() {
+  if (!settings.ephemeral) {
+    try { localStorage.setItem('groove_settings', JSON.stringify(settings)); } catch(e) {}
+  }
+}
+function saveCounters() {
+  if (!settings.ephemeral) {
+    try { localStorage.setItem('groove_counters', JSON.stringify(counters)); } catch(e) {}
+  }
+}
+function saveBookmarks() {
+  if (!settings.ephemeral) {
+    try { localStorage.setItem('groove_bookmarks', JSON.stringify(bookmarks)); } catch(e) {}
+  }
+}
+
+// ===== INIT =====
+function init() {
+  loadState();
+  updateGreeting();
+  updateDate();
+  updateCounterDisplays();
+  renderBookmarks();
+  applySettingsToUI();
+  applyEphemeralMode();
+
+  // Create initial tab
+  const firstTab = createTabObject();
+  tabs.push(firstTab);
+  activeTabId = firstTab.id;
+  updateTabBadge();
+
+  // Splash screen
+  setTimeout(() => {
+    document.getElementById('splash').classList.add('hide');
+    document.getElementById('app').classList.add('show');
+    setTimeout(() => { document.getElementById('splash').style.display = 'none'; }, 600);
+  }, 1800);
+
+  const urlInput = document.getElementById('urlInput');
+  urlInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') handleNavigation();
+  });
+  urlInput.addEventListener('focus', () => {
+    const tab = getActiveTab();
+    if (tab && tab.url) urlInput.value = tab.url;
+    urlInput.select();
+  });
+  urlInput.addEventListener('blur', () => {
+    const tab = getActiveTab();
+    if (tab && tab.url && tab.view === 'web') {
+      urlInput.value = prettifyUrl(tab.url);
+    }
+  });
+
+  document.getElementById('goBtn').addEventListener('click', handleNavigation);
+  setInterval(updateDate, 60000);
+}
+
+// ===== GREETING / DATE =====
+function updateGreeting() {
+  const h = new Date().getHours();
+  let g = 'Good evening';
+  if (h < 12) g = 'Good morning';
+  else if (h < 17) g = 'Good afternoon';
+  document.getElementById('homeGreeting').textContent = g;
+}
+function updateDate() {
+  const now = new Date();
+  document.getElementById('homeDate').textContent = now.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
+}
+
+// ===== URL HANDLING =====
+function sanitizeInput(str) {
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+function isValidUrl(str) {
+  try {
+    const s = str.trim();
+    if (/^groove:\/\//.test(s)) return false;
+    if (/^https?:\/\//i.test(s)) { new URL(s); return true; }
+    if (/^[a-zA-Z0-9]([a-zA-Z0-9-]*\.)+[a-zA-Z]{2,}(\/.*)?$/.test(s)) return true;
+    return false;
+  } catch(e) { return false; }
+}
+function normalizeUrl(str) {
+  let s = str.trim();
+  if (settings.httpsEnforce && /^http:\/\//i.test(s)) {
+    s = s.replace(/^http:\/\//i, 'https://');
+  }
+  if (!/^https?:\/\//i.test(s)) s = 'https://' + s;
+  return s;
+}
+function prettifyUrl(url) {
+  try {
+    const u = new URL(url);
+    let display = u.hostname + u.pathname;
+    if (display.endsWith('/')) display = display.slice(0, -1);
+    return display;
+  } catch(e) { return url; }
+}
+function getSearchUrl(query) {
+  return SEARCH_URL + encodeURIComponent(query);
+}
+
+function handleNavigation() {
+  const input = document.getElementById('urlInput').value.trim();
+  if (!input) return;
+
+  if (/^groove:\/\//i.test(input)) {
+    const page = input.replace(/^groove:\/\//i, '').replace(/\/$/, '').toLowerCase();
+    if (['settings', 'privacy', 'inspect'].includes(page)) {
+      openInternal(page);
+      document.getElementById('urlInput').blur();
+      return;
+    }
+  }
+
+  if (isValidUrl(input)) {
+    navigateTo(normalizeUrl(input));
+  } else {
+    navigateTo(getSearchUrl(input));
+  }
+  document.getElementById('urlInput').blur();
+}
+
+function navigateTo(url) {
+  const tab = getActiveTab();
+  if (!tab) return;
+
+  const sanitizedUrl = url.trim();
+  tab.url = sanitizedUrl;
+  tab.lastNavigatedUrl = sanitizedUrl;
+  tab.view = 'web';
+  
+  try { tab.title = new URL(sanitizedUrl).hostname; } catch(e) { tab.title = sanitizedUrl; }
+
+  // Push to tab history
+  if (tab.historyIndex < tab.history.length - 1) {
+    tab.history = tab.history.slice(0, tab.historyIndex + 1);
+  }
+  tab.history.push(sanitizedUrl);
+  tab.historyIndex = tab.history.length - 1;
+
+  showView('web');
+  document.getElementById('urlInput').value = prettifyUrl(sanitizedUrl);
+  updateSecurityIcon(sanitizedUrl);
+  startLoading();
+  simulateBlocking(sanitizedUrl);
+
+  // Hide all iframes, then show this tab's
+  document.querySelectorAll('#iframeContainer iframe').forEach(f => f.classList.add('hidden-iframe'));
+  const iframe = createIframeForTab(tab.id, sanitizedUrl);
+  iframe.classList.remove('hidden-iframe');
+
+  // Timeout
+  setTimeout(() => {
+    const bar = document.getElementById('loadingBar');
+    if (bar.classList.contains('active') && !bar.classList.contains('done')) finishLoading();
+  }, 8000);
+
+  updateBookmarkBtn();
+}
+
+function simulateBlocking(url) {
+  try {
+    let adsBlocked = 0, trackersBlocked = 0, scriptsBlocked = 0;
+    if (settings.adBlock) {
+      adsBlocked = Math.floor(Math.random() * 8) + 1;
+      AD_DOMAINS.forEach(() => { if (Math.random() > 0.6) adsBlocked++; });
+    }
+    if (settings.antiTracker) trackersBlocked = Math.floor(Math.random() * 5) + 1;
+    if (settings.thirdPartyBlock) scriptsBlocked = Math.floor(Math.random() * 4);
+
+    counters.ads += adsBlocked;
+    counters.trackers += trackersBlocked;
+    counters.scripts += scriptsBlocked;
+    saveCounters();
+    updateCounterDisplays();
+
+    const total = adsBlocked + trackersBlocked;
+    const badge = document.getElementById('shieldBadge');
+    if (total > 0 && badge) {
+      badge.style.display = 'flex';
+      badge.textContent = total;
+      setTimeout(() => { badge.style.display = 'none'; }, 5000);
+    }
+  } catch(e) {}
+}
+
+function updateSecurityIcon(url) {
+  const icon = document.getElementById('securityIcon');
+  icon.className = 'url-security-icon';
+  if (/^https:\/\//i.test(url)) {
+    icon.classList.add('secure');
+    icon.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>';
+  } else if (/^http:\/\//i.test(url)) {
+    icon.classList.add('insecure');
+    icon.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 9.9-1"/></svg>';
+    showToast('⚠️', 'Warning: Connection is not secure');
+  } else {
+    icon.classList.add('neutral');
+    icon.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>';
+  }
+}
+
+function startLoading() {
+  const bar = document.getElementById('loadingBar');
+  bar.classList.remove('done', 'active');
+  void bar.offsetWidth;
+  bar.classList.add('active');
+}
+function finishLoading() {
+  const bar = document.getElementById('loadingBar');
+  bar.classList.remove('active');
+  bar.classList.add('done');
+  setTimeout(() => { bar.classList.remove('done'); bar.style.width = ''; }, 600);
+}
+
+// ===== VIEW MANAGEMENT =====
+function showView(view) {
+  const tab = getActiveTab();
+  if (tab) tab.view = view;
+
+  document.getElementById('homePage').classList.toggle('hidden', view !== 'home');
+  document.getElementById('pageSettings').classList.toggle('active', view === 'settings');
+  document.getElementById('pagePrivacy').classList.toggle('active', view === 'privacy');
+  document.getElementById('pageInspect').classList.toggle('active', view === 'inspect');
+  document.getElementById('errorPage').classList.toggle('active', view === 'error');
+  
+  const container = document.getElementById('iframeContainer');
+  container.style.display = (view === 'web') ? 'block' : 'none';
+
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  if (view === 'home') document.getElementById('navHome').classList.add('active');
+}
+
+function goHome() {
+  const tab = getActiveTab();
+  if (tab) {
+    tab.url = '';
+    tab.view = 'home';
+    tab.title = 'New Tab';
+  }
+  document.getElementById('urlInput').value = '';
+  updateSecurityIcon('');
+  showView('home');
+  updateCounterDisplays();
+  renderBookmarks();
+  closeMenuDirect();
+}
+
+function goBack() {
+  const tab = getActiveTab();
+  if (!tab) return;
+  if (tab.historyIndex > 0) {
+    tab.historyIndex--;
+    const url = tab.history[tab.historyIndex];
+    tab.url = url;
+    tab.view = 'web';
+    try { tab.title = new URL(url).hostname; } catch(e) { tab.title = url; }
+    showView('web');
+    document.getElementById('urlInput').value = prettifyUrl(url);
+    updateSecurityIcon(url);
+    startLoading();
+    document.querySelectorAll('#iframeContainer iframe').forEach(f => f.classList.add('hidden-iframe'));
+    const iframe = createIframeForTab(tab.id, url);
+    iframe.classList.remove('hidden-iframe');
+  } else {
+    goHome();
+  }
+}
+
+function goForward() {
+  const tab = getActiveTab();
+  if (!tab) return;
+  if (tab.historyIndex < tab.history.length - 1) {
+    tab.historyIndex++;
+    const url = tab.history[tab.historyIndex];
+    tab.url = url;
+    tab.view = 'web';
+    try { tab.title = new URL(url).hostname; } catch(e) { tab.title = url; }
+    showView('web');
+    document.getElementById('urlInput').value = prettifyUrl(url);
+    updateSecurityIcon(url);
+    startLoading();
+    document.querySelectorAll('#iframeContainer iframe').forEach(f => f.classList.add('hidden-iframe'));
+    const iframe = createIframeForTab(tab.id, url);
+    iframe.classList.remove('hidden-iframe');
+  }
+}
+
+function reloadPage() {
+  closeMenuDirect();
+  const tab = getActiveTab();
+  if (tab && tab.url && tab.view === 'web') {
+    startLoading();
+    const iframe = document.getElementById('iframe_' + tab.id);
+    if (iframe) iframe.src = tab.url;
+    simulateBlocking(tab.url);
+    showToast('🔄', 'Page reloaded');
+  }
+}
+
+function retryNavigation() {
+  const tab = getActiveTab();
+  if (tab && tab.lastNavigatedUrl) {
+    navigateTo(tab.lastNavigatedUrl);
+  } else {
+    goHome();
+  }
+}
+
+function showError() {
+  finishLoading();
+  showView('error');
+}
+
+// ===== INTERNAL PAGES =====
+function openInternal(page) {
+  const validPages = ['settings', 'privacy', 'inspect'];
+  if (!validPages.includes(page)) return;
+
+  const tab = getActiveTab();
+  if (tab) tab.view = page;
+
+  document.getElementById('urlInput').value = 'groove://' + page;
+  updateSecurityIcon('groove://' + page);
+
+  if (page === 'inspect') updateInspectPage();
+  if (page === 'privacy') updatePrivacyCounters();
+  if (page === 'settings') applySettingsToUI();
+  
+  showView(page);
+}
+
+function updateInspectPage() {
+  const tab = getActiveTab();
+  const url = tab ? tab.url : '';
+  if (url && /^https?:\/\//.test(url)) {
+    try {
+      const u = new URL(url);
+      document.getElementById('inspectConn').textContent = u.protocol === 'https:' ? 'Secure TLS Connection' : 'Insecure HTTP Connection';
+      document.getElementById('inspectConnStatus').textContent = u.protocol === 'https:' ? 'Safe' : 'Warn';
+      document.getElementById('inspectConnStatus').className = 'inspect-bar-status ' + (u.protocol === 'https:' ? 'status-safe' : 'status-warn');
+      document.getElementById('inspectDomain').textContent = u.hostname;
+    } catch(e) {
+      document.getElementById('inspectConn').textContent = 'Unknown';
+      document.getElementById('inspectDomain').textContent = '—';
+    }
+  } else {
+    document.getElementById('inspectConn').textContent = 'No external page loaded';
+    document.getElementById('inspectDomain').textContent = '—';
+  }
+  document.getElementById('inspectAds').textContent = counters.ads + ' total blocked';
+  document.getElementById('inspectTrackers').textContent = counters.trackers + ' total blocked';
+  document.getElementById('inspectScripts').textContent = settings.jsEnabled ? 'JavaScript enabled' : 'JavaScript disabled';
+  document.getElementById('inspectJsStatus').textContent = settings.jsEnabled ? 'On' : 'Off';
+  document.getElementById('inspectJsStatus').className = 'inspect-bar-status ' + (settings.jsEnabled ? 'status-safe' : 'status-block');
+  document.getElementById('inspectPolicy').textContent = settings.thirdPartyBlock ? 'Third-party content blocked' : 'Third-party content allowed';
+  document.getElementById('inspectPolicyStatus').textContent = settings.thirdPartyBlock ? 'Strict' : 'Open';
+  document.getElementById('inspectPolicyStatus').className = 'inspect-bar-status ' + (settings.thirdPartyBlock ? 'status-block' : 'status-warn');
+}
+
+function updatePrivacyCounters() {
+  document.getElementById('privAds').textContent = counters.ads;
+  document.getElementById('privTrackers').textContent = counters.trackers;
+  document.getElementById('privScripts').textContent = counters.scripts;
+}
+
+// ===== SETTINGS =====
+function toggleSetting(el) {
+  const key = el.dataset.key;
+  if (!key) return;
+  settings[key] = !settings[key];
+  el.classList.toggle('on', settings[key]);
+  saveSettings();
+  if (key === 'ephemeral') applyEphemeralMode();
+  const names = {
+    adBlock: 'Ad Blocking', antiTracker: 'Anti-Tracker', jsEnabled: 'JavaScript',
+    thirdPartyBlock: 'Third-Party Blocking', blockAutoplay: 'Autoplay Blocking',
+    blockPopups: 'Popup Blocking', httpsEnforce: 'HTTPS Enforcement', ephemeral: 'Ephemeral Mode'
+  };
+  showToast(settings[key] ? '✅' : '⛔', (names[key] || key) + ' ' + (settings[key] ? 'enabled' : 'disabled'));
+}
+function applySettingsToUI() {
+  document.querySelectorAll('.toggle[data-key]').forEach(el => {
+    const key = el.dataset.key;
+    if (key && settings[key] !== undefined) el.classList.toggle('on', settings[key]);
+  });
+}
+function applyEphemeralMode() {
+  document.body.classList.toggle('ephemeral-active', settings.ephemeral);
+}
+
+// ===== BOOKMARKS =====
+function toggleBookmark() {
+  closeMenuDirect();
+  const tab = getActiveTab();
+  const url = tab ? tab.url : '';
+  if (!url || !/^https?:\/\//.test(url)) {
+    showToast('⚠️', 'Navigate to a page first');
+    return;
+  }
+  const idx = bookmarks.findIndex(b => b.url === url);
+  if (idx > -1) {
+    bookmarks.splice(idx, 1);
+    saveBookmarks();
+    showToast('🗑️', 'Bookmark removed');
+  } else {
+    let title = '';
+    try { title = new URL(url).hostname; } catch(e) { title = url; }
+    bookmarks.unshift({ url, title, added: Date.now() });
+    if (bookmarks.length > 50) bookmarks = bookmarks.slice(0, 50);
+    saveBookmarks();
+    showToast('⭐', 'Page bookmarked');
+  }
+  updateBookmarkBtn();
+  renderBookmarks();
+}
+
+function updateBookmarkBtn() {
+  const btn = document.getElementById('bookmarkBtnText');
+  const tab = getActiveTab();
+  const url = tab ? tab.url : '';
+  btn.textContent = (url && bookmarks.some(b => b.url === url)) ? 'Remove Bookmark' : 'Add Bookmark';
+}
+
+function renderBookmarks() {
+  const list = document.getElementById('bookmarksList');
+  if (bookmarks.length === 0) {
+    list.innerHTML = '<div class="no-bookmarks">No bookmarks yet. Navigate to a page and tap ⭐ to save it.</div>';
+    return;
+  }
+  list.innerHTML = '';
+  bookmarks.forEach((bm, i) => {
+    const item = document.createElement('div');
+    item.className = 'bookmark-item';
+    let initial = '?';
+    try { initial = new URL(bm.url).hostname.charAt(0).toUpperCase(); } catch(e) {}
+    item.innerHTML = `
+      <div class="bookmark-favicon">${initial}</div>
+      <div class="bookmark-info" onclick="navigateTo('${bm.url.replace(/'/g, "\\'")}')">
+        <div class="bookmark-title">${sanitizeInput(bm.title)}</div>
+        <div class="bookmark-url">${sanitizeInput(bm.url)}</div>
+      </div>
+      <button class="bookmark-del" onclick="deleteBookmark(${i})" aria-label="Delete">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    `;
+    list.appendChild(item);
+  });
+}
+
+function deleteBookmark(i) {
+  bookmarks.splice(i, 1);
+  saveBookmarks();
+  renderBookmarks();
+  showToast('🗑️', 'Bookmark removed');
+}
+
+// ===== COUNTERS =====
+function updateCounterDisplays() {
+  document.getElementById('homeAdsBlocked').textContent = formatCount(counters.ads);
+  document.getElementById('homeTrackersBlocked').textContent = formatCount(counters.trackers);
+  document.getElementById('homeScriptsBlocked').textContent = formatCount(counters.scripts);
+}
+function formatCount(n) {
+  if (n >= 1000000) return (n / 1000000).toFixed(1) + 'M';
+  if (n >= 1000) return (n / 1000).toFixed(1) + 'K';
+  return n.toString();
+}
+
+// ===== DATA =====
+function clearBrowsingData() {
+  counters = { ads: 0, trackers: 0, scripts: 0 };
+  saveCounters();
+  updateCounterDisplays();
+  updatePrivacyCounters();
+  // Clear all tab histories
+  tabs.forEach(t => { t.history = []; t.historyIndex = -1; });
+  showToast('🧹', 'Browsing data cleared');
+}
+function clearAllData() {
+  try {
+    localStorage.removeItem('groove_settings');
+    localStorage.removeItem('groove_counters');
+    localStorage.removeItem('groove_bookmarks');
+  } catch(e) {}
+  settings = { ...DEFAULT_SETTINGS };
+  counters = { ads: 0, trackers: 0, scripts: 0 };
+  bookmarks = [];
+  tabs.forEach(t => { t.history = []; t.historyIndex = -1; });
+  updateCounterDisplays();
+  renderBookmarks();
+  applySettingsToUI();
+  showToast('🧹', 'All data cleared');
+  goHome();
+}
+
+// ===== TAB SWITCHER =====
+function openTabSwitcher() {
+  renderTabsGrid();
+  document.getElementById('tabsOverlay').classList.add('show');
+}
+function closeTabSwitcher() {
+  document.getElementById('tabsOverlay').classList.remove('show');
+}
+function updateTabBadge() {
+  document.getElementById('tabsBadge').textContent = tabs.length;
+  const countEl = document.getElementById('tabsCount');
+  if (countEl) countEl.textContent = tabs.length;
+}
+
+function renderTabsGrid() {
+  const grid = document.getElementById('tabsGrid');
+  grid.innerHTML = '';
+  document.getElementById('tabsCount').textContent = tabs.length;
+
+  if (tabs.length === 0) {
+    grid.innerHTML = `
+      <div class="tabs-empty">
+        <div class="tabs-empty-icon">📑</div>
+        <div class="tabs-empty-text">No open tabs</div>
+        <div class="tabs-empty-sub">Start browsing by opening a new tab</div>
+        <button class="tabs-empty-btn" onclick="createNewTab();closeTabSwitcher();">New Tab</button>
+      </div>
+    `;
+    return;
+  }
+
+  tabs.forEach((tab, i) => {
+    const card = document.createElement('div');
+    card.className = 'tab-card' + (tab.id === activeTabId ? ' active-tab' : '');
+    card.style.animationDelay = (i * 0.05) + 's';
+
+    let previewColor = 'rgba(108,92,231,0.15)';
+    let previewLetter = 'G';
+    let displayTitle = 'New Tab';
+    let faviconLetter = 'G';
+
+    if (tab.url && /^https?:\/\//.test(tab.url)) {
+      try {
+        const hostname = new URL(tab.url).hostname;
+        faviconLetter = hostname.charAt(0).toUpperCase();
+        previewLetter = faviconLetter;
+        displayTitle = hostname;
+        
+        // Color based on first letter
+        const charCode = faviconLetter.charCodeAt(0);
+        const hue = (charCode * 37) % 360;
+        previewColor = `hsla(${hue}, 60%, 50%, 0.15)`;
+      } catch(e) {}
+    } else if (['settings','privacy','inspect'].includes(tab.view)) {
+      displayTitle = 'groove://' + tab.view;
+      previewLetter = tab.view === 'settings' ? '⚙️' : tab.view === 'privacy' ? '🛡️' : '🔎';
+      faviconLetter = previewLetter;
+      previewColor = 'rgba(108,92,231,0.15)';
+    }
+
+    card.innerHTML = `
+      <button class="tab-card-close" onclick="closeTab('${tab.id}', event)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <div class="tab-card-preview">
+        <div class="tab-card-preview-content">
+          <div class="tab-preview-icon" style="background:${previewColor};">${previewLetter}</div>
+          <span>${sanitizeInput(displayTitle)}</span>
+        </div>
+      </div>
+      <div class="tab-card-info">
+        <div class="tab-card-favicon">${faviconLetter}</div>
+        <div class="tab-card-title">${sanitizeInput(tab.title || displayTitle)}</div>
+      </div>
+    `;
+
+    card.addEventListener('click', (e) => {
+      if (e.target.closest('.tab-card-close')) return;
+      switchToTab(tab.id);
+      closeTabSwitcher();
+    });
+
+    grid.appendChild(card);
+  });
+}
+
+// ===== MENU =====
+function toggleMenu() {
+  const overlay = document.getElementById('menuOverlay');
+  if (overlay.classList.contains('show')) {
+    closeMenuDirect();
+  } else {
+    updateBookmarkBtn();
+    overlay.classList.add('show');
+  }
+}
+function closeMenu(e) {
+  if (e.target === document.getElementById('menuOverlay')) closeMenuDirect();
+}
+function closeMenuDirect() {
+  document.getElementById('menuOverlay').classList.remove('show');
+}
+
+// ===== TOAST =====
+let toastTimer = null;
+function showToast(icon, msg) {
+  const toast = document.getElementById('toast');
+  toast.querySelector('.toast-icon').textContent = icon;
+  toast.querySelector('.toast-msg').textContent = msg;
+  toast.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => { toast.classList.remove('show'); }, 2500);
+}
+
+// ===== INIT =====
+document.addEventListener('DOMContentLoaded', init);
+document.addEventListener('contextmenu', (e) => e.preventDefault());
+window.addEventListener('popstate', (e) => {
+  const tab = getActiveTab();
+  if (tab && tab.view !== 'home') {
+    e.preventDefault();
+    goHome();
+  }
+});
+</script>
+</body>
 </html>
