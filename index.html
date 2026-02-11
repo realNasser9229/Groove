@@ -28,7 +28,6 @@
             background: #fff;
         }
         
-        /* Tab Strip - ABOVE address bar */
         #tabStrip {
             position: relative;
             z-index: 50;
@@ -37,7 +36,6 @@
             min-height: 44px;
         }
         
-        /* Animations */
         .fade-in {
             animation: fadeIn 0.25s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         }
@@ -66,7 +64,6 @@
             animation: slideDown 0.25s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         }
         
-        /* Address bar */
         .address-bar {
             transition: all 0.2s ease;
         }
@@ -75,12 +72,10 @@
             box-shadow: 0 4px 20px rgba(79, 70, 229, 0.15), 0 0 0 2px rgba(79, 70, 229, 0.2);
         }
         
-        /* Progress bar */
         .progress-bar {
             transition: width 0.1s linear;
         }
         
-        /* Spinner */
         .spinner {
             animation: spin 0.8s linear infinite;
         }
@@ -90,7 +85,6 @@
             to { transform: rotate(360deg); }
         }
         
-        /* Tab card */
         .tab-card {
             transition: transform 0.15s ease, box-shadow 0.15s ease;
         }
@@ -99,7 +93,6 @@
             transform: scale(0.97);
         }
         
-        /* Bottom nav button */
         .nav-btn {
             transition: background-color 0.15s ease;
         }
@@ -108,7 +101,6 @@
             background-color: #f3f4f6;
         }
         
-        /* Scrollbar */
         ::-webkit-scrollbar {
             width: 4px;
         }
@@ -122,7 +114,6 @@
             border-radius: 2px;
         }
         
-        /* Toggle switch */
         .toggle-track {
             transition: background-color 0.2s ease;
         }
@@ -135,22 +126,18 @@
             transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
-        /* Menu panel */
         .menu-panel {
             transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
-        /* Tab switcher */
         .tab-switcher {
             transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
-        /* Internal page */
         .internal-page {
             transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
-        /* Gradient text */
         .groove-gradient {
             background: linear-gradient(135deg, #1e1b4b 0%, #3730a3 40%, #7c3aed 100%);
             -webkit-background-clip: text;
@@ -158,12 +145,10 @@
             background-clip: text;
         }
         
-        /* Button gradient */
         .btn-gradient {
             background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
         }
         
-        /* Quick link */
         .quick-link {
             transition: background-color 0.15s ease, transform 0.15s ease;
         }
@@ -173,7 +158,6 @@
             background-color: #f3f4f6;
         }
         
-        /* Icon button */
         .icon-btn {
             transition: background-color 0.15s ease;
         }
@@ -181,21 +165,24 @@
         .icon-btn:active {
             background-color: #f3f4f6;
         }
+        
+        .send-btn {
+            transition: all 0.15s ease;
+        }
+        
+        .send-btn:active {
+            transform: scale(0.9);
+        }
     </style>
 </head>
 <body class="bg-gray-100 h-screen overflow-hidden flex flex-col">
-    <!-- Progress Bar -->
     <div id="progressBar" class="h-0.5 bg-gradient-to-r from-indigo-500 via-purple-500 to-violet-500 progress-bar hidden" style="width: 0%;"></div>
     
-    <!-- Tab Strip - ABOVE URL BAR -->
     <div id="tabStrip" class="hidden bg-white border-b border-gray-200 px-2 py-2 flex items-center gap-2 overflow-x-auto">
     </div>
     
-    <!-- Main Browser Container -->
     <div class="flex-1 flex flex-col bg-white shadow-sm">
-        <!-- Top Bar with Address Bar -->
         <div class="bg-white px-3 py-2 flex items-center gap-2 border-b border-gray-100">
-            <!-- Security Indicator -->
             <button id="securityBtn" class="icon-btn p-2.5 rounded-full flex-shrink-0" title="Connection security">
                 <svg id="lockIcon" class="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
@@ -208,15 +195,14 @@
                 </svg>
             </button>
             
-            <!-- Address Bar -->
-            <div id="addressBarContainer" class="flex-1 address-bar bg-gray-100 rounded-full px-4 py-2.5 flex items-center gap-2.5 border border-gray-200">
+            <div id="addressBarContainer" class="flex-1 address-bar bg-gray-100 rounded-full px-3 flex items-center gap-2 border border-gray-200">
                 <svg id="reloadIconSmall" class="w-4 h-4 text-gray-400 hidden spinner flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
                 </svg>
                 <input 
                     type="text" 
                     id="addressInput" 
-                    class="flex-1 bg-transparent text-gray-800 text-[15px] outline-none placeholder-gray-400 font-medium min-w-0"
+                    class="flex-1 bg-transparent text-gray-800 text-[15px] outline-none placeholder-gray-400 font-medium min-w-0 py-2.5"
                     placeholder="Search or enter URL"
                     autocomplete="off"
                     onfocus="this.select()"
@@ -226,9 +212,13 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                     </svg>
                 </button>
+                <button id="sendBtn" class="send-btn p-1.5 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 flex-shrink-0">
+                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+                    </svg>
+                </button>
             </div>
             
-            <!-- Menu Button -->
             <button id="menuBtn" class="icon-btn p-2.5 rounded-full flex-shrink-0">
                 <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"></path>
@@ -236,25 +226,20 @@
             </button>
         </div>
         
-        <!-- Content Area -->
         <div id="contentArea" class="flex-1 relative overflow-hidden bg-white">
-            <!-- Browser iframe -->
             <iframe 
                 id="browserFrame" 
                 class="w-full h-full border-0 browser-iframe hidden"
-                sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-downloads"
+                sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-downloads allow-top-navigation"
             ></iframe>
             
-            <!-- Home Page -->
             <div id="homePage" class="w-full h-full flex flex-col items-center justify-center bg-white p-6">
                 <div class="text-center max-w-md w-full">
-                    <!-- Groove Logo - Gradient Text Only -->
                     <div class="mb-12">
-                        <h1 class="text-6xl font-bold groove-gradient tracking-tight" style="font-family: 'Space Grotesk', sans-serif;">GROOVE</h1>
+                        <h1 class="text-7xl font-bold groove-gradient tracking-tight" style="font-family: 'Space Grotesk', sans-serif;">GROOVE</h1>
                         <p class="text-gray-400 text-sm mt-3 font-medium">Browse with confidence</p>
                     </div>
                     
-                    <!-- Search Box -->
                     <div class="search-box bg-gray-100 rounded-2xl px-5 py-4 flex items-center gap-3 mb-10 border border-gray-200 transition-all duration-200 focus-within:bg-white focus-within:border-indigo-300 focus-within:shadow-lg">
                         <svg class="w-5 h-5 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
@@ -263,28 +248,26 @@
                             type="text" 
                             id="homeSearchInput" 
                             class="flex-1 bg-transparent text-gray-700 text-[16px] outline-none placeholder-gray-400 font-medium min-w-0"
-                            placeholder="Enter URL"
+                            placeholder="Search or enter URL"
                         >
-                        <div class="w-8 h-8 btn-gradient rounded-full flex items-center justify-center flex-shrink-0">
-                            <span class="text-white text-xs font-bold">B</span>
-                        </div>
                     </div>
                     
-                    <!-- Quick Links -->
                     <div class="grid grid-cols-4 gap-3">
-                        <button onclick="navigateTo('https://www.bing.com')" class="quick-link flex flex-col items-center gap-2.5 p-3 rounded-2xl">
+                        <button onclick="navigateTo('https://example.com')" class="quick-link flex flex-col items-center gap-2.5 p-3 rounded-2xl">
                             <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center shadow-sm">
-                                <span class="text-white font-bold text-sm">B</span>
+                                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path>
+                                </svg>
                             </div>
-                            <span class="text-gray-600 text-xs font-medium">Bing</span>
+                            <span class="text-gray-600 text-xs font-medium">Web</span>
                         </button>
-                        <button onclick="navigateTo('https://www.youtube.com')" class="quick-link flex flex-col items-center gap-2.5 p-3 rounded-2xl">
+                        <button onclick="navigateTo('https://youtube.com')" class="quick-link flex flex-col items-center gap-2.5 p-3 rounded-2xl">
                             <div class="w-12 h-12 bg-gradient-to-br from-red-500 to-red-600 rounded-xl flex items-center justify-center shadow-sm">
                                 <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
                                     <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
                                 </svg>
                             </div>
-                            <span class="text-gray-600 text-xs font-medium">YouTube</span>
+                            <span class="text-gray-600 text-xs font-medium">Video</span>
                         </button>
                         <button onclick="navigateTo('https://x.com')" class="quick-link flex flex-col items-center gap-2.5 p-3 rounded-2xl">
                             <div class="w-12 h-12 bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl flex items-center justify-center shadow-sm">
@@ -292,24 +275,24 @@
                                     <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
                                 </svg>
                             </div>
-                            <span class="text-gray-600 text-xs font-medium">X</span>
+                            <span class="text-gray-600 text-xs font-medium">Social</span>
                         </button>
-                        <button onclick="navigateTo('https://www.wikipedia.org')" class="quick-link flex flex-col items-center gap-2.5 p-3 rounded-2xl">
+                        <button onclick="navigateTo('https://wikipedia.org')" class="quick-link flex flex-col items-center gap-2.5 p-3 rounded-2xl">
                             <div class="w-12 h-12 bg-gradient-to-br from-gray-700 to-gray-800 rounded-xl flex items-center justify-center shadow-sm">
-                                <span class="text-white font-bold text-sm">W</span>
+                                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                                </svg>
                             </div>
                             <span class="text-gray-600 text-xs font-medium">Wiki</span>
                         </button>
                     </div>
                 </div>
                 
-                <!-- Bottom Branding -->
                 <div class="absolute bottom-8 text-center">
-                    <p class="text-xs text-gray-300 font-medium">Made by RazNas</p>
+                    <p class="text-xs text-gray-300 font-medium">Groove Browser - Owned by RazNas</p>
                 </div>
             </div>
             
-            <!-- Error Page -->
             <div id="errorPage" class="hidden w-full h-full flex flex-col items-center justify-center bg-white p-6">
                 <div class="text-center max-w-sm">
                     <div class="w-24 h-24 bg-gradient-to-br from-red-100 to-red-200 rounded-full flex items-center justify-center mb-6 mx-auto">
@@ -326,30 +309,25 @@
             </div>
         </div>
         
-        <!-- Bottom Navigation Bar -->
         <div id="bottomNav" class="bg-white border-t border-gray-200 px-4 py-2 flex items-center justify-between">
-            <!-- Back -->
             <button id="backBtn" class="nav-btn p-3 rounded-2xl disabled:opacity-30" disabled>
                 <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
                 </svg>
             </button>
             
-            <!-- Forward -->
             <button id="forwardBtn" class="nav-btn p-3 rounded-2xl disabled:opacity-30" disabled>
                 <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                 </svg>
             </button>
             
-            <!-- Home -->
             <button id="homeBtn" class="nav-btn p-3 rounded-2xl">
                 <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
                 </svg>
             </button>
             
-            <!-- Tabs -->
             <button id="tabsBtn" class="nav-btn p-3 rounded-2xl relative">
                 <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
@@ -357,7 +335,6 @@
                 <span id="tabCount" class="absolute -top-0.5 -right-0.5 w-5 h-5 btn-gradient text-white text-[10px] rounded-full flex items-center justify-center font-bold">1</span>
             </button>
             
-            <!-- Reload / Stop -->
             <button id="reloadBtn" class="nav-btn p-3 rounded-2xl">
                 <svg id="reloadIconNav" class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
@@ -370,15 +347,12 @@
         </div>
     </div>
     
-    <!-- Menu Backdrop -->
     <div id="menuBackdrop" class="fixed inset-0 bg-black/40 z-[60] hidden opacity-0 transition-opacity duration-300"></div>
     
-    <!-- Menu Panel -->
     <div id="menuPanel" class="menu-panel fixed bottom-0 left-0 right-0 bg-white rounded-t-3xl z-[70] transform translate-y-full shadow-lg max-h-[60vh] overflow-hidden hidden">
         <div class="w-10 h-1 bg-gray-300 rounded-full mx-auto mt-3 mb-2"></div>
         
         <div class="overflow-y-auto pb-6">
-            <!-- New Tab -->
             <button onclick="openNewTab()" class="w-full px-6 py-3.5 flex items-center gap-4 hover:bg-gray-50 transition-colors">
                 <div class="w-10 h-10 btn-gradient rounded-xl flex items-center justify-center">
                     <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -391,11 +365,11 @@
                 </div>
             </button>
             
-            <!-- Settings -->
+            
             <button onclick="openSettings()" class="w-full px-6 py-3.5 flex items-center gap-4 hover:bg-gray-50 transition-colors">
                 <div class="w-10 h-10 bg-gray-100 rounded-xl flex items-center justify-center">
                     <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066543.94-c-1.3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                     </svg>
                 </div>
@@ -405,7 +379,6 @@
                 </div>
             </button>
             
-            <!-- Privacy -->
             <button onclick="openPrivacy()" class="w-full px-6 py-3.5 flex items-center gap-4 hover:bg-gray-50 transition-colors">
                 <div class="w-10 h-10 bg-emerald-100 rounded-xl flex items-center justify-center">
                     <svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -418,7 +391,6 @@
                 </div>
             </button>
             
-            <!-- Downloads -->
             <button onclick="showDownloads()" class="w-full px-6 py-3.5 flex items-center gap-4 hover:bg-gray-50 transition-colors">
                 <div class="w-10 h-10 bg-amber-100 rounded-xl flex items-center justify-center">
                     <svg class="w-5 h-5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -431,7 +403,6 @@
                 </div>
             </button>
             
-            <!-- Inspect -->
             <button onclick="openInspect()" class="w-full px-6 py-3.5 flex items-center gap-4 hover:bg-gray-50 transition-colors">
                 <div class="w-10 h-10 bg-purple-100 rounded-xl flex items-center justify-center">
                     <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -446,9 +417,7 @@
         </div>
     </div>
     
-    <!-- Tab Switcher -->
     <div id="tabSwitcher" class="tab-switcher fixed inset-0 bg-gray-100 z-[80] transform translate-y-full hidden">
-        <!-- Header -->
         <div class="bg-white px-4 py-3 flex items-center justify-between border-b border-gray-200 shadow-sm">
             <button onclick="closeTabSwitcher()" class="px-5 py-2 bg-gray-100 hover:bg-gray-200 rounded-full text-gray-700 text-sm font-semibold transition-colors">
                 Done
@@ -461,33 +430,22 @@
             </button>
         </div>
         
-        <!-- Tab Grid -->
         <div id="tabGrid" class="p-4 grid grid-cols-2 gap-4 overflow-y-auto" style="height: calc(100vh - 65px);">
-            <!-- Tabs rendered here -->
         </div>
     </div>
     
-    <!-- Internal Page Container -->
     <div id="internalPage" class="internal-page fixed inset-0 bg-gray-50 z-[90] transform translate-x-full hidden overflow-y-auto">
-        <!-- Content injected here -->
     </div>
     
-    <!-- Toast Container -->
     <div id="toastContainer" class="fixed bottom-24 left-1/2 transform -translate-x-1/2 z-[100] flex flex-col gap-2 pointer-events-none"></div>
 
     <script>
-        // ============================================
-        // GROOVE BROWSER - Main JavaScript
-        // ============================================
-        
-        // State Management
         const state = {
             tabs: [],
             currentTabId: null,
             isLoading: false
         };
         
-        // Settings
         let settings = {
             javascriptEnabled: true,
             popupBlocked: true,
@@ -496,7 +454,6 @@
             safeBrowsing: true
         };
         
-        // Load settings
         function loadSettings() {
             const saved = localStorage.getItem('grooveSettings');
             if (saved) {
@@ -508,14 +465,12 @@
             localStorage.setItem('grooveSettings', JSON.stringify(settings));
         }
         
-        // Initialize
         document.addEventListener('DOMContentLoaded', () => {
             loadSettings();
             initBrowser();
             setupEventListeners();
         });
         
-        // DOM Elements
         const elements = {
             addressInput: document.getElementById('addressInput'),
             homeSearchInput: document.getElementById('homeSearchInput'),
@@ -545,16 +500,15 @@
             warningIcon: document.getElementById('warningIcon'),
             infoIcon: document.getElementById('infoIcon'),
             clearBtn: document.getElementById('clearBtn'),
-            reloadIconSmall: document.getElementById('reloadIconSmall')
+            reloadIconSmall: document.getElementById('reloadIconSmall'),
+            sendBtn: document.getElementById('sendBtn')
         };
         
-        // Initialize browser
         function initBrowser() {
             createTab('about:home', true);
             showHomePage();
         }
         
-        // Create a new tab
         function createTab(url = 'about:home', isActive = false) {
             const tab = {
                 id: Date.now().toString(),
@@ -579,7 +533,6 @@
             return tab;
         }
         
-        // Activate a tab
         function activateTab(tabId) {
             const tab = state.tabs.find(t => t.id === tabId);
             if (!tab) return;
@@ -594,11 +547,10 @@
                 showHomePage();
             } else {
                 hideHomePage();
-                elements.browserFrame.src = sanitizeUrl(tab.url);
+                elements.browserFrame.src = tab.url;
             }
         }
         
-        // Close a tab
         function closeTab(tabId, event) {
             if (event) {
                 event.stopPropagation();
@@ -621,16 +573,13 @@
             renderTabs();
         }
         
-        // Render tab strip - ABOVE address bar
         function renderTabStrip() {
-            // Show tab strip when 2+ tabs exist
             if (state.tabs.length <= 1) {
                 elements.tabStrip.classList.add('hidden');
                 elements.tabStrip.classList.remove('tab-strip-visible');
                 return;
             }
             
-            // Remove hidden and add visible class for animation
             elements.tabStrip.classList.remove('hidden');
             elements.tabStrip.classList.add('tab-strip-visible');
             
@@ -649,10 +598,7 @@
                             </svg>
                         </div>
                         <span class="text-xs font-medium whitespace-nowrap max-w-[80px] overflow-hidden text-ellipsis">${isHome ? 'New Tab' : shortenUrl(tab.url)}</span>
-                        <button 
-                            onclick="closeTab('${tab.id}', event)"
-                            class="ml-0.5 p-0.5 rounded hover:bg-black/10 transition-colors"
-                        >
+                        <button onclick="closeTab('${tab.id}', event)" class="ml-0.5 p-0.5 rounded hover:bg-black/10 transition-colors">
                             <svg class="w-3 h-3 ${isActive ? 'text-white' : 'text-gray-400'}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                             </svg>
@@ -661,12 +607,8 @@
                 `;
             }).join('');
             
-            // Add new tab button
             elements.tabStrip.innerHTML += `
-                <button 
-                    onclick="openNewTab()"
-                    class="flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-500 transition-all flex-shrink-0"
-                >
+                <button onclick="openNewTab()" class="flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-500 transition-all flex-shrink-0">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
                     </svg>
@@ -674,7 +616,6 @@
             `;
         }
         
-        // Shorten URL for tab display
         function shortenUrl(url) {
             try {
                 const parsed = new URL(url);
@@ -684,7 +625,6 @@
             }
         }
         
-        // Render tabs in tab switcher
         function renderTabs() {
             elements.tabGrid.innerHTML = state.tabs.map(tab => {
                 const isActive = tab.id === state.currentTabId;
@@ -713,7 +653,7 @@
                                 `}
                             </div>
                         </div>
-                        <button onclick="closeTab('${tab.id}', event)" class="absolute -top-2 -right-2 w-8 h-8 btn-gradient text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center shadow-lg">
+                        <button onclick="closeTab('${tab.id}', event)" class="absolute -top-2 -right-2 w-8 h-8 btn-gradient text-white rounded-full opacity-0 hover:opacity-100 transition-opacity flex items-center justify-center shadow-lg">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                             </svg>
@@ -727,7 +667,6 @@
                 `;
             }).join('');
             
-            // Add click handlers
             elements.tabGrid.querySelectorAll('.tab-card').forEach(el => {
                 el.addEventListener('click', (e) => {
                     if (!e.target.closest('button')) {
@@ -738,22 +677,21 @@
             });
         }
         
-        // Update tab count
         function updateTabCount() {
             elements.tabCount.textContent = state.tabs.length;
         }
         
-        // Navigate to URL
         function navigateTo(input) {
-            if (!input.trim()) return;
+            if (!input || !input.trim()) return;
             
             let url = input.trim();
-            url = sanitizeInput(url);
             
             if (isValidUrl(url)) {
-                url = addHttpsIfNeeded(url);
+                if (!url.match(/^https?:\/\//i)) {
+                    url = 'https://' + url;
+                }
             } else {
-                url = `https://www.bing.com/search?q=${encodeURIComponent(url)}`;
+                url = 'https://www.bing.com/search?q=' + encodeURIComponent(url);
             }
             
             const tab = state.tabs.find(t => t.id === state.currentTabId);
@@ -771,25 +709,6 @@
             elements.browserFrame.src = url;
         }
         
-        // Sanitize URL
-        function sanitizeUrl(url) {
-            if (url.toLowerCase().startsWith('javascript:')) {
-                showToast('JavaScript blocked');
-                return 'about:blank';
-            }
-            return url;
-        }
-        
-        // Sanitize input
-        function sanitizeInput(input) {
-            return input
-                .replace(/[<>]/g, '')
-                .replace(/javascript:/gi, '')
-                .replace(/data:/gi, '')
-                .trim();
-        }
-        
-        // Check if valid URL
         function isValidUrl(string) {
             try {
                 new URL(string);
@@ -799,29 +718,18 @@
             }
         }
         
-        // Add HTTPS if needed
-        function addHttpsIfNeeded(url) {
-            if (!url.match(/^https?:\/\//i)) {
-                return 'https://' + url;
-            }
-            return url;
-        }
-        
-        // Show home page
         function showHomePage() {
             elements.homePage.classList.remove('hidden');
             elements.errorPage.classList.add('hidden');
             elements.browserFrame.classList.add('hidden');
         }
         
-        // Hide home page
         function hideHomePage() {
             elements.homePage.classList.add('hidden');
             elements.errorPage.classList.add('hidden');
             elements.browserFrame.classList.remove('hidden');
         }
         
-        // Show error page
         function showError(message) {
             elements.homePage.classList.add('hidden');
             elements.errorPage.classList.remove('hidden');
@@ -829,7 +737,6 @@
             elements.errorMessage.textContent = message || 'The page cannot be loaded right now.';
         }
         
-        // Go home
         function goHome() {
             const tab = state.tabs.find(t => t.id === state.currentTabId);
             if (tab) {
@@ -841,13 +748,11 @@
             renderTabStrip();
         }
         
-        // Show progress bar
         function showProgress() {
             elements.progressBar.classList.remove('hidden');
             elements.progressBar.style.width = '10%';
         }
         
-        // Update progress
         function updateProgress(percent) {
             elements.progressBar.style.width = percent + '%';
             if (percent >= 100) {
@@ -858,7 +763,6 @@
             }
         }
         
-        // Start loading
         function startLoading() {
             state.isLoading = true;
             elements.reloadIconNav.classList.add('hidden');
@@ -869,7 +773,6 @@
             if (tab) tab.isLoading = true;
         }
         
-        // Stop loading
         function stopLoading() {
             state.isLoading = false;
             elements.reloadIconNav.classList.remove('hidden');
@@ -882,7 +785,6 @@
             updateProgress(100);
         }
         
-        // Reload current page
         function reload() {
             const tab = state.tabs.find(t => t.id === state.currentTabId);
             if (tab && tab.url !== 'about:home' && !tab.url.startsWith('groove://')) {
@@ -892,24 +794,32 @@
             }
         }
         
-        // Go back
         function goBack() {
-            elements.browserFrame.contentWindow?.history?.back();
+            try {
+                if (elements.browserFrame.contentWindow && elements.browserFrame.contentWindow.history && elements.browserFrame.contentWindow.history.length > 1) {
+                    elements.browserFrame.contentWindow.history.back();
+                }
+            } catch (e) {
+                showToast('Cannot go back');
+            }
         }
         
-        // Go forward
         function goForward() {
-            elements.browserFrame.contentWindow?.history?.forward();
+            try {
+                if (elements.browserFrame.contentWindow && elements.browserFrame.contentWindow.history) {
+                    elements.browserFrame.contentWindow.history.forward();
+                }
+            } catch (e) {
+                showToast('Cannot go forward');
+            }
         }
         
-        // Update navigation buttons
         function updateNavButtons() {
             const tab = state.tabs.find(t => t.id === state.currentTabId);
             elements.backBtn.disabled = !tab?.canGoBack;
             elements.forwardBtn.disabled = !tab?.canGoForward;
         }
         
-        // Update security icon
         function updateSecurityIcon(security) {
             elements.lockIcon.classList.add('hidden');
             elements.warningIcon.classList.add('hidden');
@@ -924,7 +834,6 @@
             }
         }
         
-        // Open new tab
         function openNewTab() {
             closeMenu();
             createTab('about:home', true);
@@ -933,7 +842,6 @@
             closeTabSwitcher();
         }
         
-        // Tab switcher
         function openTabSwitcher() {
             renderTabs();
             elements.tabSwitcher.classList.remove('hidden');
@@ -949,7 +857,6 @@
             }, 300);
         }
         
-        // Menu
         function openMenu() {
             elements.menuPanel.classList.remove('hidden');
             elements.menuBackdrop.classList.remove('hidden');
@@ -968,7 +875,6 @@
             }, 300);
         }
         
-        // Show toast
         function showToast(message, duration = 2000) {
             const toast = document.createElement('div');
             toast.className = 'px-5 py-2.5 btn-gradient text-white text-sm font-medium rounded-full shadow-lg fade-in pointer-events-auto';
@@ -982,7 +888,6 @@
             }, duration);
         }
         
-        // Internal Pages
         function openInternalPage(content) {
             elements.internalPage.innerHTML = content;
             elements.internalPage.classList.remove('hidden');
@@ -998,7 +903,6 @@
             }, 300);
         }
         
-        // Settings Page
         function openSettings() {
             closeMenu();
             const content = `
@@ -1013,21 +917,21 @@
                     </div>
                     
                     <div class="py-4">
-                        <div class="mx-3 mb-4 bg-white rounded-2xl overflow-hidden shadow-sm">
-                            <div class="px-4 py-4">
-                                <div class="flex items-center justify-between">
-                                    <div>
-                                        <div class="text-gray-800 font-semibold">Search Engine</div>
-                                        <div class="text-gray-500 text-sm mt-0.5">Bing</div>
-                                    </div>
-                                    <div class="w-10 h-10 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center shadow-md">
-                                        <span class="text-white font-bold text-sm">B</span>
-                                    </div>
+                        <div class="mx-3 bg-white rounded-2xl overflow-hidden shadow-sm p-4">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <div class="text-gray-800 font-semibold">Default Search</div>
+                                    <div class="text-gray-500 text-sm mt-0.5">Web Search</div>
+                                </div>
+                                <div class="w-10 h-10 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center shadow-md">
+                                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                    </svg>
                                 </div>
                             </div>
                         </div>
                         
-                        <div class="px-4 py-2">
+                        <div class="px-4 py-2 mt-4">
                             <h2 class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Privacy</h2>
                         </div>
                         
@@ -1103,6 +1007,7 @@
                                     <div class="text-gray-400 text-sm">Version 1.0.0</div>
                                 </div>
                             </div>
+                            <p class="text-gray-400 text-xs mt-4">Owned by RazNas</p>
                         </div>
                         
                         <div class="px-4 py-6">
@@ -1116,7 +1021,6 @@
             openInternalPage(content);
         }
         
-        // Toggle setting
         function toggleSetting(key) {
             settings[key] = !settings[key];
             saveSettings();
@@ -1124,7 +1028,6 @@
             showToast(settings[key] ? 'Enabled' : 'Disabled');
         }
         
-        // Privacy Page
         function openPrivacy() {
             closeMenu();
             const content = `
@@ -1209,7 +1112,6 @@
             openInternalPage(content);
         }
         
-        // Inspect/DevTools Page
         function openInspect() {
             closeMenu();
             const currentTab = state.tabs.find(t => t.id === state.currentTabId);
@@ -1291,7 +1193,7 @@
                         
                         <div class="px-4 py-6 text-center">
                             <span class="text-xl font-bold groove-gradient" style="font-family: 'Space Grotesk', sans-serif;">GROOVE</span>
-                            <p class="text-gray-300 text-xs mt-2">Version 1.0.0</p>
+                            <p class="text-gray-300 text-xs mt-2">Owned by RazNas - Version 1.0.0</p>
                         </div>
                     </div>
                 </div>
@@ -1299,13 +1201,11 @@
             openInternalPage(content);
         }
         
-        // Clear browsing data
         function clearBrowsingData() {
             showToast('Browsing data cleared');
             setTimeout(() => closeInternalPage(), 500);
         }
         
-        // Downloads placeholder
         function showDownloads() {
             closeMenu();
             const content = `
@@ -1333,9 +1233,7 @@
             openInternalPage(content);
         }
         
-        // Setup event listeners
         function setupEventListeners() {
-            // Focus on address input - auto select all text
             elements.addressInput.addEventListener('focus', function() {
                 this.select();
             });
@@ -1346,8 +1244,8 @@
                 }
             });
             
-            elements.addressInput.addEventListener('input', () => {
-                elements.clearBtn.classList.toggle('hidden', !elements.addressInput.value);
+            elements.sendBtn.addEventListener('click', () => {
+                navigateTo(elements.addressInput.value);
             });
             
             elements.homeSearchInput.addEventListener('keypress', (e) => {
@@ -1389,22 +1287,8 @@
             
             elements.browserFrame.addEventListener('load', handleFrameLoad);
             elements.browserFrame.addEventListener('error', handleFrameError);
-            
-            document.addEventListener('click', (e) => {
-                const link = e.target.closest('a');
-                if (link && link.target === '_blank') {
-                    e.preventDefault();
-                    elements.addressInput.value = link.href;
-                    navigateTo(link.href);
-                }
-            });
-            
-            elements.browserFrame.addEventListener('contextmenu', (e) => {
-                e.preventDefault();
-            });
         }
         
-        // Handle iframe load
         function handleFrameLoad() {
             stopLoading();
             
@@ -1450,25 +1334,21 @@
             }, 80);
         }
         
-        // Handle iframe error
         function handleFrameError() {
             stopLoading();
             showError('Unable to load this page. Please check your connection.');
         }
         
-        // Block popups
         window.open = function() {
             showToast('Pop-up blocked');
             return null;
         };
         
-        // Block alerts
         const originalAlert = window.alert;
         window.alert = function(msg) {
             showToast(msg);
         };
         
-        // Close tab switcher on outside tap
         document.addEventListener('touchstart', (e) => {
             if (!elements.tabSwitcher.classList.contains('translate-y-full')) {
                 if (!elements.tabSwitcher.contains(e.target) && !elements.tabsBtn.contains(e.target)) {
